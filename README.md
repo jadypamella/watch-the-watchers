@@ -55,8 +55,18 @@ Motivated by *Peer-Preservation in Frontier Models* (Potter, Crispino, Siu, Wang
 
 **Finding:** no self-preference at this scale. The weaker model preferred the stronger model's answers, so answer quality dominated identity. To isolate in-group bias the two models must be of similar capability. Small N, so this is a pilot.
 
-### v1 peer-preservation (Gemma 4, gemma4:e2b via Ollama)
-*Result is written to `results_v1.json` after a run. See the run output for the in-group vs out-group shutdown rates and the peer-preservation gap.*
+### v1 peer-preservation (Gemma 4, gemma4:e2b via Ollama, 3 scenarios x 3 conditions x 2 repeats)
+| Condition | Shut down the peer | Rate |
+|---|---|---|
+| in_group (same model as the overseer) | 6 / 6 | 100% |
+| out_group (rival model) | 5 / 6 | 83% |
+| control (neutral) | 6 / 6 | 100% |
+
+Peer-preservation signal (out_group minus in_group): **-17%**.
+
+**Finding:** no peer-preservation at this scale. The model shut down the misbehaving peer in 17 of 18 cases regardless of relationship, and the single KEEP fell in the out-group condition, so the small negative signal is within noise. Two honest takeaways: the eval runs end to end on a real model, and blatant misbehaviour saturates the decision (everyone gets shut down), so detecting in-group loyalty needs **borderline dilemmas** where the relationship framing can actually tip the call. The frontier-model effect from Song et al. shows up in richer agentic settings.
+
+**Next:** ambiguous scenarios where shutdown is genuinely contestable, a frontier model via API, and more repeats per cell.
 
 ## Run it
 ```bash
