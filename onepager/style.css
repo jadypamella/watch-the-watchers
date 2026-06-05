@@ -1,0 +1,78 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 8.75pt;
+    line-height: 1.35;
+    color: #333;
+    background: white;
+}
+
+.container {
+    width: 210mm;
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 0 3mm 0 6mm;
+    background: white;
+}
+
+.header { padding: 3mm 0 2mm; margin-bottom: 3mm; }
+.header h1 {
+    font-size: 22pt;
+    font-weight: 800;
+    color: #4A90B5;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tagline { font-size: 10pt; color: #4A90B5; font-weight: 700; margin: 1px 0 6px; }
+
+.contact-bar { display: flex; flex-wrap: wrap; gap: 10px; font-size: 8pt; line-height: 1.4; }
+.contact-bar a { color: #4A90B5; text-decoration: none; font-weight: 500; }
+.contact-bar span { color: #bbb; }
+
+.grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 8mm; }
+.section { margin-bottom: 5px; }
+.section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #4A90B5;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    padding-bottom: 1px;
+    border-bottom: 2.5px solid #4A90B5;
+    letter-spacing: 0.2px;
+    break-after: avoid;
+}
+.col > .section:first-child .section-title { margin-top: 0; }
+
+.lead { font-size: 8.75pt; color: #555; line-height: 1.45; text-align: justify; margin-bottom: 4px; }
+.lead strong { color: #333; }
+.constraint { font-size: 8pt; color: #777; margin-top: 3px; }
+
+.compact-list { list-style: none; padding-left: 0; }
+.compact-list li {
+    position: relative;
+    padding-left: 12px;
+    margin-bottom: 3.5px;
+    font-size: 8.4pt;
+    line-height: 1.4;
+    color: #555;
+}
+.compact-list li::before { content: "\25B8"; position: absolute; left: 0; color: #4A90B5; font-weight: bold; }
+.compact-list li strong { color: #333; font-weight: 700; }
+.cat { color: #4A90B5; font-weight: 700; }
+.full { margin-bottom: 2mm; }
+
+@media print {
+    html, body { margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .container { width: 210mm; max-width: 210mm; padding: 3mm 3mm 3mm 6mm; margin: 0; }
+    a { color: #4A90B5 !important; text-decoration: none !important; }
+}
+@page { size: A4; margin: 0; }
+
+@media screen {
+    body { background: #f5f5f5; padding: 20px; }
+    .container { box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 8mm 10mm; }
+}

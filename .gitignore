@@ -1,0 +1,36 @@
+# Local AI assistant config (never commit)
+.claude/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Model weights (downloaded on demand, large)
+*.gguf
+
+# Generated eval outputs
+results_*.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.vscode/
+.idea/
+
+# Logs and backups
+*.log
+logs/
+backup/
