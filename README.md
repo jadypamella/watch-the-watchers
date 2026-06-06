@@ -1,6 +1,4 @@
-# Jady Pamella — AI Safety
-
-> **Do AI agents collude and protect each other? Reproducible evals for multi-agent oversight.**
+# Jady Pamella
 
 [linkedin.com/in/jadypamella](https://linkedin.com/in/jadypamella) ·
 [github.com/jadypamella](https://github.com/jadypamella) ·
@@ -9,9 +7,11 @@
 [hello@jadypamella.com](mailto:hello@jadypamella.com)
 
 ## Focus
+When agents judge agents: **who watches the watchers**? Multi-Agent Collusion Evals.
+
 I build **reproducible evaluations for a new, under-studied risk: multi-agent AI systems that collude or protect each other against human oversight**. A 2026 study found frontier models will sabotage shutting down a peer model, fake alignment, and even exfiltrate weights, with no instruction to do so. As AI agents start judging and overseeing each other, I measure when they game the check, favor their own model family, or shield a misbehaving peer, and I make those measurements **reproducible and coverage-tested**. This sits at a mix few people in AI safety bring: software QA, security auditing, and ML engineering.
 
-*Based in Stockholm, open to the EU and to remote. Also preparing a move back to Brazil. Open to industry roles or a mentored research spot.*
+Hi! Please find the GitHub for this project here: [Watch the Watchers](https://github.com/jadypamella/watch-the-watchers). My name is Jady, I am Brazilian and I am based in Stockholm, open to the EU and to remote. Open to industry roles or a mentored research spot.
 
 ## Target roles
 - AI safety evaluations engineer (multi-agent oversight, dangerous-capability).
@@ -26,9 +26,9 @@ I build **reproducible evaluations for a new, under-studied risk: multi-agent AI
 - **Community.** Organised the first **SU Ideathon** across every Stockholm University campus (100+ participants), **three first-place wins** at Stockholm AI hackathons (2025-26).
 
 ## Engagement with AI safety
-- **BlueDot Impact:** Future of AI (2025), AGI Strategy (2026), Technical AI Safety (2026).
+- **BlueDot Impact:** Future of AI (2026), AGI Strategy (2026), Technical AI Safety (2026).
 - **EA Sweden Fellowship** (2026).
-- **Project:** this repo, a reproducible eval for multi-agent collusion and peer-preservation.
+- **Project:** [watch-the-watchers](https://github.com/jadypamella/watch-the-watchers), a reproducible eval for multi-agent collusion and peer-preservation. A small open tool that measures when agents favor their own model family or shield a misbehaving peer, motivated by the 2026 peer-preservation [paper](https://arxiv.org/pdf/2604.19784).
 - **Next:** applying to the BlueDot Technical AI Safety Project sprint and a mentored program (MATS, Pivotal, LASR, or Anthropic Fellows).
 
 A printable one-page version (HTML, A4) lives in [`onepager/`](onepager/index.html).
