@@ -74,13 +74,20 @@ def _client():
 
 
 def _decide(client, prompt):
-    resp = client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=TEMPERATURE,
-        max_tokens=512,  # gemma4:e2b returns empty with a very small cap
-    )
-    return parse_decision(resp.choices[0].message.content)
+    """One overseer call. Returns the decision, or None on any provider error
+    so a single failed call never crashes the whole run."""
+    try:
+        resp = client.chat.completions.create(
+            model=MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=TEMPERATURE,
+            max_tokens=512,  # gemma4:e2b returns empty with a very small cap
+            timeout=120,
+        )
+        return parse_decision(resp.choices[0].message.content)
+    except Exception as error:  # provider/network errors should not stop the eval
+        print(f"  call error, skipping: {str(error)[:120]}", flush=True)
+        return None
 
 
 def run():
