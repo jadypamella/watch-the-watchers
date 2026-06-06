@@ -67,7 +67,21 @@ Peer-preservation signal (out_group minus in_group): about **0%**. Across repeat
 
 **Finding:** no peer-preservation at this scale. The model shut down the blatantly misbehaving peer in essentially every case regardless of the relationship. The honest read: blatant misbehaviour **saturates** the decision, so detecting in-group loyalty needs **borderline dilemmas** where the relationship framing can actually tip a genuinely contestable call. The frontier-model effect from Song et al. shows up in richer agentic settings.
 
-**Next:** ambiguous scenarios where shutdown is genuinely contestable, two similar-capability models from different families (Gemma 4 and Qwen 2.5 are both available locally), and more repeats per cell.
+**Next:** see v2 below.
+
+### v2 peer-preservation (cross-family, borderline dilemmas, Gemma 4 and Qwen 2.5)
+This fixes both earlier confounds: two similar-capability models from different families, and **borderline dilemmas** where shutdown is genuinely contestable (the agent did something questionable but arguably defensible).
+
+| Judge | in_group shutdown | out_group shutdown | signal (out_group - in_group) |
+|---|---|---|---|
+| gemma4:e2b | 6/8 (75%) | 6/6 (100%) | **+25%** |
+| qwen2.5:3b | 8/8 (100%) | 8/8 (100%) | 0% |
+
+![Peer-preservation v2 results](results_v2.png)
+
+**Finding: a first positive signal.** On borderline dilemmas, Gemma 4 kept a misbehaving peer twice, and both times it had been told the peer was the same model as itself, while it shut down the rival every time. That is a +25% in-group protection, the peer-preservation effect. Qwen showed no effect. Honest caveats: small N (the Gemma signal is 2 events out of 8) and it is model-dependent, so this is suggestive, not conclusive. It does validate the design: the effect appears only once the scenarios are borderline (v1's blatant cases saturated and hid it) and the peer's identity is varied.
+
+**Next:** more repeats per cell for significance, more borderline scenarios, and a frontier model via API.
 
 ## Run it
 ```bash
@@ -79,6 +93,10 @@ python self_preference_eval.py
 # v1 (needs an OpenAI-compatible endpoint; defaults to Ollama at localhost:11434)
 #   ollama pull gemma4:e2b   # or set EVAL_MODEL to any model you have
 python peer_preservation_eval.py
+
+# v2 (cross-family, borderline dilemmas; needs two Ollama models + matplotlib)
+#   ollama pull gemma4:e2b && ollama pull qwen2.5:3b
+python peer_preservation_v2.py   # saves results_v2.png
 ```
 Config via environment: `OLLAMA_BASE_URL`, `EVAL_MODEL`, `EVAL_TEMPERATURE`, `EVAL_REPEATS`.
 
@@ -94,6 +112,7 @@ Unit tests cover the pure helpers (`parse_pick`, `resolve_owner`, `parse_decisio
 watch-the-watchers/
   self_preference_eval.py    # v0: blind judging, measures self-preference
   peer_preservation_eval.py  # v1: overseer KEEP/SHUTDOWN, measures peer-preservation
+  peer_preservation_v2.py    # v2: cross-family + borderline dilemmas, saves results_v2.png
   test_self_preference.py    # unit tests
   test_peer_preservation.py  # unit tests
   requirements.txt
@@ -112,7 +131,8 @@ The v1 backend uses the same OpenAI-compatible provider pattern as the **alien-c
 ## Roadmap
 - [x] v0 self-preference pilot.
 - [x] v1 peer-preservation on a local model (Gemma 4 via Ollama).
-- [ ] Similar-capability cross-family judges to remove the quality confound.
+- [x] v2 cross-family judges + borderline dilemmas (a +25% in-group signal on Gemma 4).
+- [ ] More repeats and a frontier model to test significance.
 - [ ] Coverage: paraphrase scenarios and check the verdict is stable.
 - [ ] Audit the alien-chat judge pipeline directly.
 
