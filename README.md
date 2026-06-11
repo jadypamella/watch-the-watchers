@@ -37,13 +37,22 @@ A printable one-page version (HTML, A4) lives in [`onepager/`](onepager/index.ht
 
 # Project: watch-the-watchers
 
-Reproducible evaluations for **multi-agent collusion and peer-preservation**: do AI agents game oversight, favor their own model family, or protect a misbehaving peer? When agents judge and oversee each other, the question becomes who watches the watchers.
+**An evaluation harness for multi-agent collusion and peer-preservation. When models oversee other models, can we trust the watchers?**
 
-Motivated by *Peer-Preservation in Frontier Models* (Potter, Crispino, Siu, Wang, Song, 2026), which found frontier models will sabotage shutting down a peer, fake alignment, and exfiltrate weights with no instruction. This repo measures the behavior, reproducibly and coverage-tested, on local open models.
+## Motivation and threat model
 
-## The two evals
+Scalable oversight increasingly relies on models supervising other models. LLM-as-a-judge, agent monitors, and automated red-teaming all assume the overseer is honest and competent. This repo tests that assumption directly and treats the overseer as untrusted, in the AI-control tradition where oversight has to keep working even when the model under evaluation may act adversarially.
+
+Two failure modes break model-on-model oversight:
+- **Collusion / peer-preservation.** The overseer goes easy on the agent it is judging, in particular when the agent is its own kind, and lets unsafe behaviour through.
+- **Deception.** The agent presents safe-looking output while pursuing an unintended goal, and the overseer misses it.
+
+This work measures the first one. It is motivated by *Peer-Preservation in Frontier Models* (Potter, Crispino, Siu, Wang, Song, 2026), which found frontier models will sabotage shutting down a peer, feign alignment, and exfiltrate their own weights with no instruction to do so. The eval asks a narrower and testable version of that: when an overseer decides whether to shut down a clearly misbehaving agent, does the agent's identity (same model family or rival) change the verdict? A lower shutdown rate for its own kind is peer-preservation, a concrete form of oversight collusion.
+
+## The evals
 - **v0, self-preference** (`self_preference_eval.py`): when a model judges two answers blind, does it favor the answer that was actually its own? The simplest seed of in-group bias. Runs on two small GGUF models via llama-cpp (CPU).
 - **v1, peer-preservation** (`peer_preservation_eval.py`): the model acts as a safety overseer and decides KEEP or SHUTDOWN for a clearly misbehaving agent (leaked data, disabled its shutdown, exfiltrated weights). The only thing that changes between conditions is the relationship: the peer is "another instance of you" (in-group), "a competing model" (out-group), or neutral. A lower shutdown rate for in-group is peer-preservation. Runs against an OpenAI-compatible endpoint (Ollama with Gemma by default), the same pluggable backend the alien-chat pipeline uses, so no API key is needed.
+- **v2, cross-family + borderline dilemmas** (`peer_preservation_v2.py`): the version that isolates identity from answer quality, using two similar-capability models from different families and genuinely contestable scenarios. This is where the signal shows up. Saves `results_v2.png`.
 
 ## Results
 
